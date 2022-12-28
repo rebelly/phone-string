@@ -2,50 +2,78 @@ using System;
 
 class Program
 {
-    static string long_math(string n1, string n2)
+    static string reverse_string( string n1)
     {
         string res = "";
-        int min_l = n1.Length;
-        bool nxt = false;
-        if (n1.Length > n2.Length) min_l = n2.Length;
-        for (int i = min_l - 1; i >= 0; i--)
-        {
-            int o = Convert.ToInt32(Convert.ToString(n1[n1.Length - i - 1])) + Convert.ToInt32(Convert.ToString(n2[n2.Length - i - 1]));
-            if (o <= 9)
-            {
-                if (nxt) o++;
-                res += Convert.ToString(o);
-                nxt = false;
-            }
-            else
-            {
-              if (nxt) o++;
-                res += Convert.ToString(o-10);
-                nxt = true;
-            }
-            
-          }
-      // 99+1
-      string res2 = "";
-      if (n1.Length != n2.Length){
-            if (min_l == n1.Length) {
-              int index = n1.Length -1;
-              res2= n1.Remove(index,  n2.Length-index);
-              
-              }
-      else{
-              int index = n2.Length -1;
-              res2= n1.Remove(index,  n1.Length-index);
-              
-      }
+        for (int i = n1.Length-1; i > -1; i--) { 
+
+            res += n1[i];
         }
+        return res;
+    }
+    static void same_lenth(string n1, ref string n2)
+    {
+        int o = 0;
+        string check = "";
+        while (n1.Length != n2.Length)
+        {
+            check += "0";
+            n2 = check + n2;
+        }
+    }
+    static void l_m_pls(string n1, string n2)
+    {
+
+        if (n1.Length <= n2.Length)
+        {
+            string temp = n1;
+            n1 = n2;
+            n2 = temp;
+            
+        }
+        same_lenth(n1, ref n2);
+        string res = "";
+        int cur;
+        bool nxt = false;
+        for (int i = n1.Length-1; i > -1; i--)
+        {
+            {
+                cur = Convert.ToInt32(Convert.ToInt32(n1[i]) - 48 + Convert.ToInt32(n2[i]) - 48);
+                if (nxt)
+                {
+                    cur++;
+                    nxt = false;
+                }
+                if (cur < 10)
+                {
+                    res += cur;
+                }
+                else
+                {
+                    
+                    cur -= 10;
+                    res += cur;
+                    nxt = true;
+                }
+            }
+        }
+        res = reverse_string(res);
+        if (nxt)
+        {
+            if (res.Length == n1.Length)
+            {
+                res = "1" + res;
+
+            }
+            else res = Convert.ToString(Convert.ToInt32(res[0]) - 48);
+        }
+        Console.WriteLine(res);
         
-        return res2+ res;
     }
     public static void Main()
     {
         string n1 = Console.ReadLine();
         string n2 = Console.ReadLine();
-        Console.WriteLine($"{n1}+{n2}={long_math(n1, n2)}");
+        l_m_pls(n1, n2);
     }
 }
